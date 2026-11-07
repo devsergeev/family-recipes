@@ -203,7 +203,7 @@
   <img class="hero" src="images/plov.jpg" alt="Плов в казане">
   <div class="meta">
     <span>⏱ ~2,5 часа</span>
-    <span id="servings-chip">🍽 ≈ 8 порций</span>
+    <span id="servings-chip">🍽 ≈ 6 порций</span>
     <span>🔥 плита + толстостенная кастрюля</span>
   </div>
 
@@ -211,9 +211,9 @@
     <h3>🧮 Калькулятор: считаем от мяса</h3>
     <div class="calc-top">
       <label for="meat">Мясо, г:</label>
-      <input type="number" id="meat" inputmode="numeric" value="800">
+      <input type="number" id="meat" inputmode="numeric" value="600">
       <span class="unit">г</span>
-      <span class="servings" id="servings">≈ 8 порций</span>
+      <span class="servings" id="servings">≈ 6 порций</span>
     </div>
     <div class="calc-note">Пропорция из видео: на 800 г мяса — 800 г риса, 800 г моркови, 120–150 г лука, 80–120 г масла.</div>
     <div class="rice-toggle" role="group" aria-label="Тип риса">
@@ -327,7 +327,7 @@ var BASE = 800;
 
 function round5(x) { return Math.round(x / 5) * 5; }
 function normMeat(v) {
-  if (!isFinite(v) || v < 1) v = 800;
+  if (!isFinite(v) || v < 1) v = 600;
   return Math.round(v);
 }
 
