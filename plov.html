@@ -82,12 +82,15 @@
   .sub { text-align: center; color: var(--muted); font-size: 0.9rem; margin-bottom: 16px; }
   .hero {
     width: 100%;
-    height: 210px;
+    aspect-ratio: 16 / 9;
     object-fit: cover;
     display: block;
     border-radius: 16px;
     margin-bottom: 16px;
     box-shadow: 0 2px 8px rgba(60, 40, 20, 0.08);
+  }
+  @media (max-width: 480px) {
+    .hero { aspect-ratio: 4 / 3; }
   }
   .meta {
     display: flex;
