@@ -132,7 +132,6 @@
   }
   #meat:focus { outline: 3px solid var(--accent-soft); }
   .unit { font-size: 1.1rem; color: var(--muted); }
-  #meat-range { flex: 1 1 180px; accent-color: var(--accent); }
   .servings { margin-left: auto; color: var(--accent); font-weight: 600; font-size: 0.95rem; white-space: nowrap; }
   .calc-note { color: var(--muted); font-size: 0.85rem; margin-top: 8px; }
   .anchor-note { color: var(--muted); font-size: 0.8rem; margin-top: 10px; }
@@ -212,9 +211,8 @@
     <h3>🧮 Калькулятор: считаем от мяса</h3>
     <div class="calc-top">
       <label for="meat">Мясо, г:</label>
-      <input type="number" id="meat" inputmode="numeric" min="100" max="5000" step="50" value="800">
+      <input type="number" id="meat" inputmode="numeric" value="800">
       <span class="unit">г</span>
-      <input type="range" id="meat-range" min="200" max="3000" step="50" value="800" aria-label="Вес мяса">
       <span class="servings" id="servings">≈ 8 порций</span>
     </div>
     <div class="calc-note">Пропорция из видео: на 800 г мяса — 800 г риса, 800 г моркови, 120–150 г лука, 80–120 г масла.</div>
@@ -318,7 +316,6 @@ themeBtn.addEventListener("click", function () {
 });
 
 var meatInput = document.getElementById("meat");
-var meatRange = document.getElementById("meat-range");
 var meatEl = document.getElementById("a-meat");
 var riceEl = document.getElementById("a-rice");
 var carrotEl = document.getElementById("a-carrot");
@@ -329,9 +326,9 @@ var servingsChip = document.getElementById("servings-chip");
 var BASE = 800;
 
 function round5(x) { return Math.round(x / 5) * 5; }
-function clampMeat(v) {
-  if (!isFinite(v)) v = 800;
-  return Math.min(5000, Math.max(100, v));
+function normMeat(v) {
+  if (!isFinite(v) || v < 1) v = 800;
+  return Math.round(v);
 }
 
 // Переключатель типа риса
@@ -346,7 +343,7 @@ document.getElementById("rice-devzira").addEventListener("click", function () { 
 document.getElementById("rice-basmati").addEventListener("click", function () { setRice("basmati"); });
 
 function recalc() {
-  var meat = clampMeat(parseInt(meatInput.value, 10));
+  var meat = normMeat(parseInt(meatInput.value, 10));
   meatEl.textContent = meat;
   riceEl.textContent = round5(meat);
   carrotEl.textContent = round5(meat);
@@ -360,17 +357,9 @@ function recalc() {
   try { localStorage.setItem("plovMeat", String(meat)); } catch (e) {}
 }
 
-meatInput.addEventListener("input", function () {
-  var v = parseInt(meatInput.value, 10);
-  if (isFinite(v)) meatRange.value = Math.min(3000, Math.max(200, v));
-  recalc();
-});
-meatRange.addEventListener("input", function () {
-  meatInput.value = meatRange.value;
-  recalc();
-});
+meatInput.addEventListener("input", recalc);
 meatInput.addEventListener("change", function () {
-  var meat = clampMeat(parseInt(meatInput.value, 10));
+  var meat = normMeat(parseInt(meatInput.value, 10));
   meatInput.value = meat;
   recalc();
 });
@@ -380,9 +369,8 @@ meatInput.addEventListener("change", function () {
   try { savedRice = localStorage.getItem("plov-rice"); } catch (e) {}
   try { savedMeat = parseInt(localStorage.getItem("plovMeat"), 10); } catch (e) {}
   if (savedRice === "basmati" || savedRice === "devzira") setRice(savedRice);
-  if (isFinite(savedMeat) && savedMeat >= 100 && savedMeat <= 5000) {
+  if (isFinite(savedMeat) && savedMeat >= 1) {
     meatInput.value = savedMeat;
-    meatRange.value = Math.min(3000, Math.max(200, savedMeat));
   }
 })();
 
