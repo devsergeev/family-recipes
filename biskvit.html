@@ -59,10 +59,13 @@
     padding: 24px 16px 60px;
   }
   .wrap { max-width: 560px; margin: 0 auto; position: relative; }
+  .top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 4px;
+  }
   .theme-btn {
-    position: absolute;
-    top: -4px;
-    right: 0;
     width: 44px;
     height: 44px;
     border-radius: 50%;
@@ -75,9 +78,6 @@
   }
   .theme-btn:hover { filter: brightness(1.1); }
   .back {
-    position: absolute;
-    top: 6px;
-    left: 0;
     font-size: 0.85rem;
     color: var(--muted);
     text-decoration: none;
@@ -88,7 +88,7 @@
     transition: filter 0.15s;
   }
   .back:hover { filter: brightness(1.08); color: var(--accent); }
-  h1 { font-size: 1.6rem; text-align: center; margin: 40px 0 4px; }
+  h1 { font-size: 1.6rem; text-align: center; margin: 12px 0 4px; }
   .sub { text-align: center; color: var(--muted); font-size: 0.9rem; margin-bottom: 20px; }
 
   .card {
@@ -196,8 +196,10 @@
 <body>
 <div class="choco-decor" id="chocoDecor"></div>
 <div class="wrap">
-  <a class="back" href="index.html">← Рецепты</a>
-  <button id="themeBtn" class="theme-btn" type="button" title="Переключить тему">🌙</button>
+  <div class="top-row">
+    <a class="back" href="index.html">← Рецепты</a>
+    <button id="themeBtn" class="theme-btn" type="button" title="Переключить тему">🌙</button>
+  </div>
   <h1>🍰 Бисквит-калькулятор</h1>
   <p class="sub">Веди вес яиц — остальное посчитается само. Всё в граммах.</p>
 
